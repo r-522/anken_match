@@ -1,0 +1,324 @@
+/**
+ * メインCSSファイル
+ *
+ * このファイルは、アプリケーション全体に適用されるグローバルスタイルを定義します。
+ * Tailwind CSSのディレクティブと、カスタムスタイルの両方を含んでいます。
+ */
+
+/**
+ * Tailwind CSSの基本レイヤー
+ *
+ * Tailwindの基本スタイル（リセットCSS、基本的なHTML要素のスタイル）をインポートします。
+ * これには、Preflightと呼ばれるTailwind独自のリセットCSSが含まれており、
+ * すべてのブラウザで一貫したスタイルの基盤を提供します。
+ */
+@tailwind base;
+
+/**
+ * Tailwind CSSのコンポーネントレイヤー
+ *
+ * 再利用可能なコンポーネントクラスをインポートします。
+ * ここには、ボタン、カード、フォーム要素などの複雑なUIコンポーネントの
+ * スタイルを定義できます。
+ */
+@tailwind components;
+
+/**
+ * Tailwind CSSのユーティリティレイヤー
+ *
+ * すべてのユーティリティクラス（margin、padding、color、など）をインポートします。
+ * これらは、要素に直接適用できる単一目的のクラスです。
+ */
+@tailwind utilities;
+
+/**
+ * ボディ要素のグローバルスタイル
+ *
+ * アプリケーション全体に適用される基本的なスタイル設定です。
+ */
+body {
+  margin: 0;  /* デフォルトのマージンを削除 */
+
+  /**
+   * フォントファミリースタック
+   *
+   * システムフォントを優先的に使用するフォントスタックです。
+   * ユーザーのOSに応じて最適なフォントを自動選択し、ネイティブな見た目と高速な表示を実現します。
+   *
+   * - macOS/iOS: -apple-system, BlinkMacSystemFont
+   * - Windows: Segoe UI
+   * - Android: Roboto
+   * - Linux: Ubuntu, Cantarell, Oxygen
+   * - フォールバック: 汎用sans-serifフォント
+   */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+
+  /**
+   * フォントスムージング
+   *
+   * テキストのレンダリングを滑らかにし、より読みやすくします。
+   * - webkit: ChromeやSafari向け
+   * - moz: Firefox向け
+   */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/**
+ * コード要素のスタイル
+ *
+ * インラインコードやコードブロックに適用されるスタイルです。
+ * 等幅フォントを使用して、コードを読みやすく表示します。
+ */
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/**
+ * カスタムスクロールバーのスタイル
+ *
+ * Webkit系ブラウザ（Chrome、Safari、Edge）のスクロールバーをカスタマイズします。
+ * デフォルトのスクロールバーよりも細くてモダンなデザインを提供します。
+ *
+ * 注意: これらのスタイルはWebkit系ブラウザでのみ機能します。
+ * Firefoxでは異なるプロパティ（scrollbar-width、scrollbar-color）を使用する必要があります。
+ */
+
+/**
+ * スクロールバー全体のサイズ
+ *
+ * スクロールバーの幅を8pxに設定します。
+ * デフォルトのスクロールバーよりも細く、邪魔にならないデザインです。
+ */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/**
+ * スクロールバーのトラック（背景部分）
+ *
+ * スクロールバーの背景となるトラック部分のスタイルです。
+ * 明るいグレー（#f1f1f1）を使用して、控えめな見た目にしています。
+ */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/**
+ * スクロールバーのつまみ（ドラッグする部分）
+ *
+ * ユーザーがドラッグしてスクロールする部分のスタイルです。
+ * ミディアムグレー（#888）を使用し、角を丸くして柔らかい印象にしています。
+ */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;  /* 角を丸める */
+}
+
+/**
+ * スクロールバーのつまみ（ホバー時）
+ *
+ * マウスカーソルをスクロールバーのつまみに重ねたときのスタイルです。
+ * より濃いグレー（#555）に変化して、インタラクティブであることを示します。
+ */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/**
+ * ========================================
+ * カスタムアニメーション
+ * ========================================
+ *
+ * このセクションでは、アプリケーション全体で使用される
+ * カスタムアニメーションを定義しています。
+ */
+
+/**
+ * スライドインアニメーション（右から左へ）
+ *
+ * 要素が画面の右側から左にスライドして表示されるアニメーションです。
+ * モーダル、サイドバー、通知などに適しています。
+ *
+ * - from: 要素が画面の右側（100%）に配置されている状態
+ * - to: 要素が本来の位置（0%）に移動した状態
+ */
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/**
+ * フェードインアニメーション
+ *
+ * 要素が徐々に表示されるアニメーションです。
+ * コンテンツの表示、ページ遷移、モーダルの表示などに使用します。
+ *
+ * - from: 完全に透明（opacity: 0）
+ * - to: 完全に不透明（opacity: 1）
+ */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/**
+ * バウンスアニメーション
+ *
+ * 要素が上下にバウンドするアニメーションです。
+ * アテンションを引きたい要素、アイコン、ボタンなどに使用します。
+ *
+ * - 0%, 100%: 元の位置
+ * - 50%: 10px上に移動
+ */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/**
+ * スライドインアニメーションを適用するユーティリティクラス
+ *
+ * 使用例: <div className="slide-in-right">...</div>
+ * 右側からスムーズに要素がスライドインします（0.3秒間、ease-outイージング）
+ */
+.slide-in-right {
+  animation: slideInRight 0.3s ease-out;
+}
+
+/**
+ * フェードインアニメーションを適用するユーティリティクラス
+ *
+ * 使用例: <div className="fade-in">...</div>
+ * 要素がスムーズにフェードインします（0.3秒間、ease-outイージング）
+ */
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/**
+ * ========================================
+ * ローディングインジケーター
+ * ========================================
+ *
+ * データの読み込み中などに表示されるローディングアニメーションです。
+ */
+
+/**
+ * ドットパルスアニメーション
+ *
+ * ドットが点滅するアニメーションです。
+ * 3つのドットが順番に明滅することで、処理中であることを視覚的に示します。
+ *
+ * - 0%, 100%: 半透明（opacity: 0.4）
+ * - 50%: 完全に不透明（opacity: 1）
+ */
+@keyframes dotPulse {
+  0%, 100% {
+    opacity: 0.4;  /* 薄い状態 */
+  }
+  50% {
+    opacity: 1;    /* 濃い状態 */
+  }
+}
+
+/**
+ * ローディングドットのベーススタイル
+ *
+ * 使用例:
+ * <div className="loading-dot"></div>
+ * <div className="loading-dot"></div>
+ * <div className="loading-dot"></div>
+ *
+ * このクラスを持つ3つの要素を並べることで、
+ * 波打つようなローディングアニメーションが作成されます。
+ *
+ * アニメーション: 1.4秒間、無限ループ、ease-in-outイージング
+ */
+.loading-dot {
+  animation: dotPulse 1.4s infinite ease-in-out;
+}
+
+/**
+ * 2番目のドットのアニメーション遅延
+ *
+ * 2番目のドットは0.2秒遅れてアニメーションを開始します。
+ * これにより、ドットが順番に点滅する波のような効果が生まれます。
+ */
+.loading-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+/**
+ * 3番目のドットのアニメーション遅延
+ *
+ * 3番目のドットは0.4秒遅れてアニメーションを開始します。
+ * 1番目、2番目と合わせて、滑らかな波のような視覚効果を実現します。
+ */
+.loading-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+/**
+ * ========================================
+ * チャット吹き出しの尾っぽ
+ * ========================================
+ *
+ * LINEやiMessageのような吹き出しの尾っぽを実装します。
+ * CSS疑似要素を使用して、吹き出しから細く伸びる三角形を描画します。
+ */
+
+/**
+ * AI側の吹き出しの尾っぽ（左側）
+ *
+ * 白色の吹き出しから左側に伸びる三角形の尾っぽ。
+ * border-を使ったトリックで三角形を作成しています。
+ *
+ * 使用例: <div className="chat-bubble-left">...</div>
+ */
+.chat-bubble-left::before {
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: 16px;
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-right: 10px solid white;
+  border-bottom: 8px solid transparent;
+}
+
+/**
+ * ユーザー側の吹き出しの尾っぽ（右側）
+ *
+ * 青色の吹き出しから右側に伸びる三角形の尾っぽ。
+ * グラデーション背景に合わせて、青色（#3b82f6）を使用しています。
+ *
+ * 使用例: <div className="chat-bubble-right">...</div>
+ */
+.chat-bubble-right::after {
+  content: '';
+  position: absolute;
+  right: -8px;
+  top: 16px;
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-left: 10px solid #3b82f6;
+  border-bottom: 8px solid transparent;
+}
